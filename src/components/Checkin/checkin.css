@@ -1,0 +1,21 @@
+.checkin-container{
+    background-color: rgb(218, 218, 218);
+    width: 50%;
+    padding: 20px;
+    margin: 25px auto;
+}
+.checkin-container button{
+    background-color: rgb(53, 56, 196);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: bolder;
+}
+.btn-left{
+    margin-right: 20%;
+}
+.btn-right{
+    margin-left: 20%;
+}
