@@ -29,9 +29,16 @@ function Signup(){
             navigate('/details');
         }
         else{
-            document.getElementById('error-header').innerHTML='Username/Password didn\'t match';
+            if(json.type===500){
+                navigate('/error');
+            }
+            else{
+                document.getElementById('error-header').innerHTML='Username already taken';
             e.target.username.value='';
             e.target.password.value='';
+            e.target.cpassword.value='';
+            }
+            
         }
     }
     return(

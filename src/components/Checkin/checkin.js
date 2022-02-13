@@ -1,3 +1,4 @@
+import { Navigate } from 'react-router-dom';
 import './checkin.css';
 function CheckIn(){
     const checkInUrl='http://localhost:5000/api/checkin/';
@@ -13,7 +14,7 @@ function CheckIn(){
         });
         const json=await response.json(); 
         if(!json.success){
-            alert('not loaded');
+            alert('Can not check-out Without check-in or Check-in Twice');
         }else{
             console.log('checkedIn');
             window.location.reload();
@@ -31,9 +32,13 @@ function CheckIn(){
         });
         const json=await response.json(); 
         if(!json.success){
-            alert('not loaded');
+            if(json.type===500){
+                Navigate('/error');
+            }else{
+
+                alert('Can not check-out Without check-in or Check-in Twice');
+            }
         }else{
-            console.log('checkedIn');
             window.location.reload();
         }
     }

@@ -1,0 +1,25 @@
+.header-container{
+    background-color: rgb(206, 206, 206);
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.grid-left{
+    align-self: center;
+}
+.grid-right{
+    align-self: center;
+}
+button{
+    font-size: 25px;
+    font-weight: bolder;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(47, 47, 160);
+    color: white;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+}
+h1{
+    cursor: pointer;
+}

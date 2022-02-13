@@ -8,11 +8,15 @@
     padding: 10px 0;
 }
 .attendance-item-container button{
-    background-color: rgb(53, 56, 196);
+    background-color: rgb(228, 43, 166);
     border: none;
     border-radius: 5px;
     padding: 10px 10px;
     cursor: pointer;
     color: white;
     font-weight: bolder;
+    font-size: 20px;
+}
+.attendance-item-container >div{
+    align-self: center;
 }

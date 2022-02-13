@@ -1,15 +1,11 @@
-.login-container{
-    width: 50%;
-    margin: 15vh auto;
+.home-container{
+
+margin: 15vh auto;
     background-color: aliceblue;
     border: 1px solid gray;
-    width: 500px;
+    width: 80%;
     box-shadow: 0 0 10px gray;
-}
-.login-container *{
-    display: block;
-    margin: 20px auto;
-    font-size: 20px;
+    padding: 100px 0;
 }
 .btn{
     width: 25%;
@@ -19,7 +15,4 @@
     border-radius: 10px;
     color: white;
     cursor: pointer;
-}
-#error-header{
-    color: red;
 }

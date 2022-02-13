@@ -1,0 +1,19 @@
+.error-container{
+
+    margin: 15vh auto;
+        background-color: aliceblue;
+        border: 1px solid gray;
+        width: 80%;
+        box-shadow: 0 0 10px gray;
+        padding: 100px 0;
+    }
+    .message{
+        width: 25%;
+        padding :20px 20px;
+        background-color: rgb(182, 27, 53);
+        margin: 0 auto;
+        border: none;
+        border-radius: 10px;
+        color: white;
+        cursor: pointer;
+    }

@@ -5,7 +5,7 @@ function Login(){
     const navigate=useNavigate();
     useEffect(()=>{
         if(localStorage.getItem('auth-token')!==null){
-            navigate('/attendance');
+            navigate('/details');
         }
     });
     const handleSubmit=async (e)=>{
@@ -23,9 +23,14 @@ function Login(){
             localStorage.setItem('auth-token',json.authToken);
             navigate('/details');
         }else{
-            document.getElementById('error-header').innerHTML='Username/Password didn\'t match';
+            if(json.type===500){
+                navigate('/error')
+            }else{
+                 document.getElementById('error-header').innerHTML='Username/Password didn\'t match';
             e.target.username.value='';
             e.target.password.value='';
+            }
+           
         }
     }
     return(

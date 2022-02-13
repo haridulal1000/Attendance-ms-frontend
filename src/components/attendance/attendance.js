@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import AttendanceItem from "../attendanceitem/attendanceitem";
 function Attendance(props){
     const {details,setDetails}=props;
+    console.log('Props',props);
     console.log('Inside component', props.details);
     const url='http://localhost:5000/api/attendances';
     const navigate=useNavigate();
@@ -21,7 +22,7 @@ function Attendance(props){
         });
         const json=await response.json(); 
         if(!json.success){
-            alert('not loaded');
+            alert('Internal Error');
         }else{
             console.log(json);
             let temp=[];
@@ -40,18 +41,12 @@ function Attendance(props){
         
     },[]);
 
-       // if(details.length>0){
                  return(
                details.map((detail)=>{
-                    return <AttendanceItem key={detail.checkIn._id} detail={detail}/>
+                    return <AttendanceItem key={detail.checkIn._id} detail={detail} setEditDetails={props.setEditDetails}/>
                   })
                 );
-        //}
-        // else{
-        //     return(
-        //         <h2>Nothing Records to Show</h2>
-            // );
-        // }
+        
     }
     
     
