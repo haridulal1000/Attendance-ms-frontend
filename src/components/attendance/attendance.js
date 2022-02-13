@@ -20,13 +20,11 @@ function Attendance(props){
         });
         const json=await response.json(); 
         if(!json.success){
-           // navigate('/error');
+          if(json.type===500){
+              navigate('/error');
+          }
         }else{
-            let temp=[];
-            for(let i=0;i<json.checkIns.length;i++){
-                temp.push({checkIn:json.checkIns[i],checkOut:json.checkOuts[i]});
-            }
-            setDetails(temp);
+            setDetails(json.attendances);
 
         }
         
@@ -37,7 +35,7 @@ function Attendance(props){
 
                  return(
                details.map((detail)=>{
-                    return <AttendanceItem key={detail.checkIn._id} detail={detail} setEditDetails={props.setEditDetails}/>
+                    return <AttendanceItem key={detail._id} detail={detail} />
                   })
                 );
         

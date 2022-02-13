@@ -32,3 +32,10 @@ hr{
     width: 80%;
     
 }
+.pair{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+.hidden{
+    display: none;
+}

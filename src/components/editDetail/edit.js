@@ -1,73 +1,127 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import './edit.css';
-function EditDetail(){
-    const navigate=useNavigate();
-   // const {editDetails}=props;
-   const {editDetails}=useParams();
-   const parsedJson=JSON.parse(editDetails);
-   
-    async function handleSubmit(e){
-        e.preventDefault();
-        const url='http://localhost:5000/api/attendance/update/';
-        
-        const newObject={
-            checkIn:{
-            id:parsedJson.checkIn._id,
-            checkedIn:document.getElementById('checkedIn').checked,
-           year:document.getElementById('checkIn-year').value,
-           month:document.getElementById('checkIn-month').value,
-           date:document.getElementById('checkIn-date').value,
-           hours:document.getElementById('checkIn-hours').value,
-           minute:document.getElementById('checkIn-minute').value,
-           second:document.getElementById('checkIn-second').value
-            },
-            checkOut:{
-            id:parsedJson.checkOut?parsedJson.checkOut._id:null,
-            checkedOut:true,
-           year:document.getElementById('checkOut-year').value,
-           month:document.getElementById('checkOut-month').value,
-           date:document.getElementById('checkOut-date').value,
-           hours:document.getElementById('checkOut-hours').value,
-           minute:document.getElementById('checkOut-month').value,
-           second:document.getElementById('checkOut-second').value
-            }
-        }
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import "./edit.css";
+function EditDetail() {
+  const navigate = useNavigate();
+  const { editDetails } = useParams();
+  const parsedJson = JSON.parse(editDetails);
 
-        const authToken = localStorage.getItem('auth-token');
-        const response = await fetch(url, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': authToken
-            },
-            body: JSON.stringify(newObject)
-        });
-        const json = await response.json();
-        if (!json.success) {
-            if(json.type===500){
-                navigate('/details');
-            }
-        }
-    }
-
-    return(
-        <div className="edit-container">
-
-        <form onSubmit={handleSubmit}>
-        <div><label htmlFor="checkedIn">Checked-In</label> <input type={'checkbox'} id="checkedIn" /></div>
-        <div>Check-In Date</div>
-        <div><input type={"text"} className="input-text"  id="checkIn-year" required/>-<input type={"text"} className="input-text" id="checkIn-month" required />-<input type={"text"} className="input-text"  id="checkIn-date" required/></div>
-        <div>Check-In Time</div>
-        <div><input type={"text"} className="input-text"  id="checkIn-hours" max={24} min={0} required/>-<input type={"text"} className="input-text"  id="checkIn-minute" max={60} min={0} required/>-<input type={"text"} className="input-text"  id="checkIn-second" max={60} min={0} required/></div>
-        <hr/>
-        <div><label htmlFor="checkout-check">Checked-Out</label> <input type={'checkbox'} id="checkedOut" /></div>
-        <div>Check-Out Date</div>
-        <div><input type={"text"} className="input-text"  id="checkOut-year" required/>-<input type={"text"} className="input-text"  id="checkOut-month" required/>-<input type={"text"} className="input-text"  id="checkOut-date" required/></div>
-        <div>Check-Out Time</div>
-        <div><input type={"text"} className="input-text"  id="checkOut-hours" max={24} min={0}required />-<input type={"text"} className="input-text"  id="checkOut-minute" max={60} min={0} required/>-<input type={"text"} className="input-text" id="checkOut-second" max={60} min={0} required/></div>
-        <input type="submit" className="submit-btn"/>
-    </form>
-        </div>
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const body = {
+      id: parsedJson._id,
+      checkedIn: document.getElementById('checkedIn').checked,
+      checkedOut: document.getElementById('checkedOut').checked,
+      Year: getDates(document.getElementById('date').value)[0],
+      Month: getDates(document.getElementById('date').value)[1],
+      Date: getDates(document.getElementById('date').value)[2],
+      checkInHours: getTimes(document.getElementById('check-in-time').value)[0],
+      checkInMinute: getTimes(document.getElementById('check-in-time').value)[1],
+      checkInSecond: getTimes(document.getElementById('check-in-time').value)[2],
+      checkOutHours: getTimes(document.getElementById('check-out-time').value)[0],
+      checkOutMinute: getTimes(document.getElementById('check-out-time').value)[1],
+      checkOutSecond: getTimes(document.getElementById('check-out-time').value)[2]
+    };
+    const token=localStorage.getItem('auth-token');
+    const response = await fetch(
+      "http://localhost:5000/api/attendance/update/",
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":token
+        },
+        body: JSON.stringify(body),
+      }
     );
+    const json=await response.json();
+    if(!json.success){
+        if(json.type===500){
+            navigate('/error');
+        }
+    }else{
+        navigate('/details');
+    }
+  }
+  function getDates(str){
+      try{
+
+          let exp=str.split('-');
+          if(exp.length!==3){
+              return  [null,null,null]
+          }
+          return exp;
+      }catch(e){
+          return [null,null,null]
+      }
+  }
+  function getTimes(str){
+    try{
+
+        let exp=str.split(':');
+        if(exp.length!==3){
+            return[null,null,null];
+        }
+        return exp;
+    }catch(e){
+        return [null,null,null]
+    }
+  }
+  function checkedInCheck(e) {
+    if (e.target.checked) {
+      document.getElementById("check-out-div").classList.remove("hidden");
+      document.getElementById("check-in-div").classList.remove("hidden");
+    } else {
+      document.getElementById("check-out-div").classList.add("hidden");
+      document.getElementById("check-in-div").classList.add("hidden");
+    }
+  }
+  function checkedOutCheck(e) {
+    if (e.target.checked) {
+      document.getElementById("check-out-div").classList.remove("hidden");
+    } else {
+      document.getElementById("check-out-div").classList.add("hidden");
+    }
+  }
+
+  return (
+    <div className="edit-container">
+      <form onSubmit={handleSubmit}>
+        <div>
+             <div className="pair">
+            <div>Date</div>
+            <div>
+              <input type={"date"} id="date" />
+            </div>
+          </div>
+          <hr />
+          <label htmlFor="checkedIn">Checked-In</label>
+          <input type={"checkbox"} id="checkedIn" onChange={checkedInCheck} />
+        </div>
+        <div id="check-in-div">
+         
+          <div className="pair">
+            <div>Check-In Time</div>
+            <div>
+              <input type={"time"} id="check-in-time" step={1}/>
+            </div>
+          </div>
+          <div></div>
+          <label htmlFor="checkedOut">Checked-Out</label>
+          <input type={"checkbox"} id="checkedOut" onChange={checkedOutCheck} />
+        </div>
+        <div id="check-out-div">
+          <div className="pair">
+            <div>Check-Out Time</div>
+            <div>
+              <input type={"time"} id="check-out-time" step={1}  />
+            </div>
+          </div>
+        </div>
+        <input type="submit" className="submit-btn" />
+      </form>
+    </div>
+  );
 }
+
 export default EditDetail;

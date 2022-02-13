@@ -6,9 +6,9 @@ function AttendanceItem(props){
     const url='http://localhost:5000/api/attendance/delete/';
     const navigate=useNavigate();
     let status;
-    if(detail.checkIn===null){
+    if(detail.checkedIn===false){
         status='ABSENT';
-    }else if((detail.checkIn!==null && detail.checkOut===null)|| detail.checkIn.checkedIn!==true){
+    }else if((detail.checkedIn!==false && detail.checkedOut===false)|| detail.checkedIn!==true){
         status='MISSED';
     }else{
         status='PRESENT';
@@ -23,13 +23,16 @@ function AttendanceItem(props){
                 'auth-token': authToken
             },
             body: JSON.stringify({
-                id: detail.checkIn._id
+                id: detail._id
             })
         });
         const json = await response.json();
         if (!json.success) {
-
+            if(json.type===500){
+                navigate('/error');
+            }
         }else{
+            console.log(json);
             window.location.reload();
         }
     }
@@ -40,9 +43,9 @@ function AttendanceItem(props){
     return(
         <>
         <div className="attendance-item-container">
-            <div>Date: {detail.checkIn.year}-{detail.checkIn.month}-{detail.checkIn.date}</div>
-        <div>CheckedIn: {detail.checkIn?`${detail.checkIn.hours}:${detail.checkIn.minute}:${detail.checkIn.second}`:'NOT AVAILABLE'}</div>
-        <div>CheckedOut: {detail.checkOut?`${detail.checkOut.hours}:${detail.checkOut.minute}:${detail.checkOut.second}`:'NOT AVAILABLE'}</div>
+            <div>Date: {detail.Year}-{detail.Month}-{detail.Date}</div>
+        <div>CheckedIn: {detail.checkedIn?`${detail.checkInHours}:${detail.checkInMinute}:${detail.checkInSecond}`:'NOT AVAILABLE'}</div>
+        <div>CheckedOut: {detail.checkedOut?`${detail.checkOutHours}:${detail.checkOutMinute}:${detail.checkOutSecond}`:'NOT AVAILABLE'}</div>
         <div>Status: {status}</div>
         <div><button onClick={editNode}>EDIT</button> <button onClick={deleteNode}>DELETE</button></div>
         </div>
