@@ -6,13 +6,11 @@ import Signup from './components/signup/signup';
 import Details from './components/Details/details';
 import Header from './components/Header/header';
 import EditDetail from './components/editDetail/edit';
-import { useState } from 'react';
 import Home from './components/Home/home';
 import Error from './components/Error/error';
 import NotFound from './components/NotFound/notfound';
 
 function App() {
-  const [editDetails, setEditDetails] = useState({});
   return (
     <div className="App">
       <Router>
@@ -31,12 +29,12 @@ function App() {
           <Route
             path="/details"
             exact
-            element={<Details setEditDetails={setEditDetails}/>}
+            element={<Details/>}
           />
           <Route
             path="/edit/:editDetails"
             exact
-            element={<EditDetail editDetails={editDetails}/>}
+            element={<EditDetail/>}
           />
           <Route
             path="/logout"

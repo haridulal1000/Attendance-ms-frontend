@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './attendanceitem.css';
 
@@ -29,7 +28,7 @@ function AttendanceItem(props){
         });
         const json = await response.json();
         if (!json.success) {
-            console.log('Could not success');
+
         }else{
             window.location.reload();
         }

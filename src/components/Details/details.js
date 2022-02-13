@@ -6,7 +6,7 @@ function Details(props){
     const [details, setDetails] = useState([]);
     return(
         <>
-        <Attendance details={details} setDetails={setDetails} setEditDetails={props.setEditDetails}/>
+        <Attendance details={details} setDetails={setDetails}/>
         <CheckIn/>
         </>
     )
