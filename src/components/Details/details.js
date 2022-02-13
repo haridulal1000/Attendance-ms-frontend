@@ -1,4 +1,4 @@
-import Attendance from "../attendance/attendance";
+import Attendance from "../Attendance/attendance";
 import { useState } from 'react';
 import CheckIn from "../Checkin/checkin";
 

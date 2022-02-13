@@ -1,6 +1,6 @@
 import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
-import AttendanceItem from "../attendanceitem/attendanceitem";
+import AttendanceItem from "../Attendanceitem/attendanceitem";
 function Attendance(props){
     const {details,setDetails}=props;
     const url='http://localhost:5000/api/attendances';
