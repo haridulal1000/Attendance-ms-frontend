@@ -4,8 +4,6 @@ import './attendanceitem.css';
 
 function AttendanceItem(props){
     const {detail}=props;
-    console.log('props',props);
-    console.log(detail);
     const url='http://localhost:5000/api/attendance/delete/';
     const navigate=useNavigate();
     let status;

@@ -5,11 +5,9 @@ function EditDetail(){
    // const {editDetails}=props;
    const {editDetails}=useParams();
    const parsedJson=JSON.parse(editDetails);
-   console.log('parsed json',parsedJson);
    
     async function handleSubmit(e){
         e.preventDefault();
-        console.log('checked',document.getElementById('checkedIn').checked);
         const url='http://localhost:5000/api/attendance/update/';
         
         const newObject={

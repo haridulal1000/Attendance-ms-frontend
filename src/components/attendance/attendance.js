@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 import AttendanceItem from "../attendanceitem/attendanceitem";
 function Attendance(props){
     const {details,setDetails}=props;
-    console.log('Props',props);
-    console.log('Inside component', props.details);
     const url='http://localhost:5000/api/attendances';
     const navigate=useNavigate();
     useEffect(async ()=>{
@@ -22,17 +20,13 @@ function Attendance(props){
         });
         const json=await response.json(); 
         if(!json.success){
-            alert('Internal Error');
+           // navigate('/error');
         }else{
-            console.log(json);
             let temp=[];
             for(let i=0;i<json.checkIns.length;i++){
                 temp.push({checkIn:json.checkIns[i],checkOut:json.checkOuts[i]});
             }
-
-            console.log('temp',temp);
             setDetails(temp);
-            console.log('Inside useeffect',details);
 
         }
         

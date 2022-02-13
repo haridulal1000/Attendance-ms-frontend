@@ -16,7 +16,6 @@ function CheckIn(){
         if(!json.success){
             alert('Can not check-out Without check-in or Check-in Twice');
         }else{
-            console.log('checkedIn');
             window.location.reload();
         }
     }
