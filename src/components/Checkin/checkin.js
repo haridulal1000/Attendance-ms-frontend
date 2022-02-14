@@ -1,18 +1,18 @@
 import { Navigate } from 'react-router-dom';
 import './checkin.css';
 function CheckIn(){
+     let remarks='';
     const checkInUrl='http://localhost:5000/api/checkin/';
     const checkOutUrl='http://localhost:5000/api/checkout/';
     async function checkIn(){
         const authToken=localStorage.getItem('auth-token');
-        const remarks=document.getElementById('remarks').value;
         const response=await fetch(checkInUrl,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
                 'auth-token':authToken,
-                body:JSON.stringify({remarks:remarks})
-            }
+            },
+            body:JSON.stringify({remarks:remarks})
         });
         const json=await response.json(); 
         if(!json.success){
@@ -29,14 +29,13 @@ function CheckIn(){
 
     async function checkOut(){
         const authToken=localStorage.getItem('auth-token');
-        const remarks=document.getElementById('remarks').value===''?null:document.getElementById('remarks').value;
         const response=await fetch(checkOutUrl,{
             method:'POST',
             headers:{
                 'Content-Type':'application/json',
                 'auth-token':authToken,
-                body:JSON.stringify({remarks:remarks})
-            }
+            },
+            body:JSON.stringify({remarks:remarks})
         });
         const json=await response.json(); 
         if(!json.success){
@@ -55,7 +54,7 @@ function CheckIn(){
         <>
         <h3 id='error'></h3>
         <div className='check-in-container'>
-        <div className="checkin-container"><button className='btn-left' onClick={checkIn}>CHECK IN</button> <button className='btn-right' onClick={checkOut}>CHECK OUT</button><input type={'text'} id="remarks" placeholder='Remarks'/> </div>
+        <div className="checkin-container"><button className='btn-left' onClick={checkIn}>CHECK IN</button> <button className='btn-right' onClick={checkOut}>CHECK OUT</button><input type={'text'} id="remarks" placeholder='Remarks' onChange={(e)=>{remarks=e.target.value}}/> </div>
         </div>
         </>
     );
